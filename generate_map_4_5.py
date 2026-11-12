@@ -125,14 +125,15 @@ print(f"Saved map_5_agricultural_road_accessibility.png in {time.time()-t0:.1f}s
 print("\nGenerating Map 6: Executive Master Summary Dashboard Map...")
 t0 = time.time()
 fig = plt.figure(figsize=(24, 16), dpi=300, facecolor='#f1f5f9')
-gs = fig.add_gridspec(2, 3, height_ratios=[1, 1], width_ratios=[1, 1, 1], hspace=0.22, wspace=0.15)
+gs = fig.add_gridspec(2, 3, top=0.91, bottom=0.04, left=0.03, right=0.97, 
+                      height_ratios=[1, 1], width_ratios=[1, 1, 1], hspace=0.24, wspace=0.15)
 
 # Subplot 1: 2026 Road Network + PMGSY
 ax_net = fig.add_subplot(gs[0, 0])
 cg.plot(ax=ax_net, color='#ffffff', edgecolor='#64748b', linewidth=0.7)
 roads_2026.plot(ax=ax_net, color='#94a3b8', linewidth=0.3, alpha=0.6)
 pmgsy.plot(ax=ax_net, color='#dc2626', linewidth=0.8, alpha=0.85)
-ax_net.set_title("A. State Road Infrastructure (2026)\n83,501 km OSM + 19,816 km PMGSY", fontweight='bold', fontsize=12)
+ax_net.set_title("A. State Road Infrastructure (2026)\n83,501 km OSM + 19,816 km PMGSY", fontweight='bold', fontsize=12, pad=10)
 ax_net.set_axis_off()
 add_north_arrow(ax_net, x=0.1, y=0.9)
 
@@ -141,7 +142,7 @@ ax_pm = fig.add_subplot(gs[0, 1])
 cg.plot(ax=ax_pm, color='#ffffff', edgecolor='#64748b', linewidth=0.7)
 pmgsy[pmgsy['scheme'] != 'PM-JANMAN'].plot(ax=ax_pm, color='#2563eb', linewidth=0.8, alpha=0.8, label='PMGSY I-IV (16,670 km)')
 pmgsy[pmgsy['scheme'] == 'PM-JANMAN'].plot(ax=ax_pm, color='#e11d48', linewidth=1.1, alpha=0.9, label='PM-JANMAN Tribal (3,146 km)')
-ax_pm.set_title("B. PMGSY & PM-JANMAN Scheme Reach\nPrioritizing Tribal & Remote Belts", fontweight='bold', fontsize=12)
+ax_pm.set_title("B. PMGSY & PM-JANMAN Scheme Reach\nPrioritizing Tribal & Remote Belts", fontweight='bold', fontsize=12, pad=10)
 ax_pm.legend(loc='lower left', fontsize=9, frameon=True, facecolor='white')
 ax_pm.set_axis_off()
 add_north_arrow(ax_pm, x=0.1, y=0.9)
@@ -154,7 +155,7 @@ tier_sub_high = hab_data[hab_data['tier_comb'] == '<500m (High)']
 tier_sub_iso = hab_data[hab_data['tier_comb'] == '>2km (Isolated)']
 ax_hab.scatter(tier_sub_high.geometry.x, tier_sub_high.geometry.y, color='#16a34a', s=2, alpha=0.6, label='High Access <500m (74.0%)')
 ax_hab.scatter(tier_sub_iso.geometry.x, tier_sub_iso.geometry.y, color='#dc2626', s=5, alpha=0.9, label='Isolated >2km (4.6%)')
-ax_hab.set_title("C. Habitation Accessibility (2026 + PMGSY)\n22,065 Connected | 1,365 Remote", fontweight='bold', fontsize=12)
+ax_hab.set_title("C. Habitation Accessibility (2026 + PMGSY)\n22,065 Connected | 1,365 Remote", fontweight='bold', fontsize=12, pad=10)
 ax_hab.legend(loc='lower left', fontsize=9, frameon=True, facecolor='white')
 ax_hab.set_axis_off()
 add_north_arrow(ax_hab, x=0.1, y=0.9)
@@ -163,14 +164,14 @@ add_north_arrow(ax_hab, x=0.1, y=0.9)
 ax_den = fig.add_subplot(gs[1, 0])
 cg_density.plot(column='density_2026_km_per_sqkm', ax=ax_den, cmap='YlGnBu', edgecolor='#334155', linewidth=0.7,
                 legend=True, legend_kwds={'label': 'Road Density (km/km²)', 'orientation': 'horizontal', 'shrink': 0.7, 'pad': 0.05})
-ax_den.set_title("D. 2026 District Road Density\nTop: Durg (1.18), Raipur (1.12)", fontweight='bold', fontsize=12)
+ax_den.set_title("D. 2026 District Road Density\nTop: Durg (1.18), Raipur (1.12)", fontweight='bold', fontsize=12, pad=10)
 ax_den.set_axis_off()
 
 # Subplot 5: Agricultural Farmland Distribution
 ax_ag = fig.add_subplot(gs[1, 1])
 cg_agri.plot(column='agri_area_k_ha', ax=ax_ag, cmap='YlOrBr', edgecolor='#334155', linewidth=0.7,
              legend=True, legend_kwds={'label': 'Farmland Area (Thousand Ha)', 'orientation': 'horizontal', 'shrink': 0.7, 'pad': 0.05})
-ax_ag.set_title("E. Agricultural Land Distribution\n14.4 Million Plots | 1.48M Ha Total", fontweight='bold', fontsize=12)
+ax_ag.set_title("E. Agricultural Land Distribution\n14.4 Million Plots | 1.48M Ha Total", fontweight='bold', fontsize=12, pad=10)
 ax_ag.set_axis_off()
 
 # Subplot 6: Key Executive KPI Matrix & Statistics Box
@@ -182,7 +183,7 @@ ax_kpi.set_axis_off()
 card = plt.Rectangle((0.2, 0.2), 9.6, 9.6, facecolor='white', edgecolor='#cbd5e1', linewidth=1.5, zorder=1)
 ax_kpi.add_patch(card)
 
-ax_kpi.text(5.0, 9.1, "EXECUTIVE SUMMARY KPIs", ha='center', va='center', fontsize=13, fontweight='bold', color='#1e293b')
+ax_kpi.text(5.0, 9.2, "EXECUTIVE SUMMARY KPIs", ha='center', va='center', fontsize=13, fontweight='bold', color='#1e293b')
 
 kpis = [
     ("OSM Road Network (2022)", "58,947 km", "101,620 Segments"),
@@ -196,16 +197,20 @@ kpis = [
     ("Agricultural Fields Analyzed", "14,405,396", "1.48 Million Hectares"),
 ]
 
-y_pos = 8.1
+y_pos = 8.25
 for title, val1, val2 in kpis:
-    ax_kpi.text(0.6, y_pos, title, fontsize=9.5, fontweight='bold', color='#334155', va='center')
-    ax_kpi.text(6.0, y_pos, val1, fontsize=9.5, fontweight='bold', color='#0284c7', va='center')
-    ax_kpi.text(9.5, y_pos, val2, fontsize=8.5, color='#64748b', ha='right', va='center')
-    ax_kpi.axhline(y_pos - 0.4, xmin=0.06, xmax=0.96, color='#f1f5f9', linewidth=1)
-    y_pos -= 0.85
+    # Line 1: Title (Dark slate, bold, top)
+    ax_kpi.text(0.5, y_pos + 0.16, title, fontsize=8.8, fontweight='bold', color='#1e293b', va='center')
+    # Line 2: Blue primary value (left aligned at x=0.5)
+    ax_kpi.text(0.5, y_pos - 0.18, val1, fontsize=10.5, fontweight='bold', color='#0284c7', va='center')
+    # Line 2: Gray secondary detail (right aligned at x=9.4, separated by >4 units from blue value)
+    ax_kpi.text(9.4, y_pos - 0.18, val2, fontsize=8.5, fontweight='medium', color='#64748b', ha='right', va='center')
+    # Subtle divider line below
+    ax_kpi.axhline(y_pos - 0.42, xmin=0.04, xmax=0.96, color='#e2e8f0', linewidth=0.8)
+    y_pos -= 0.88
 
 fig.suptitle("CHHATTISGARH STATE GEOSPATIAL INFRASTRUCTURE & ACCESSIBILITY ANALYSIS (2022 - 2026)\nComparative Assessment of Road Network Growth, PMGSY / PM-JANMAN Schemes, Rural Connectivity & Agricultural Farmland",
-             fontsize=17, fontweight='bold', y=0.98, color='#0f172a')
+             fontsize=16, fontweight='bold', y=0.975, color='#0f172a')
 
 fig.savefig(os.path.join(figures_dir, "map_6_chhattisgarh_accessibility_master_dashboard.png"), dpi=300, facecolor=fig.get_facecolor(), bbox_inches='tight')
 plt.close()

@@ -40,21 +40,18 @@ def add_north_arrow(ax, x=0.07, y=0.92, size=25):
 # ==============================================================================
 # MAP 1: Comparative Road Network Evolution (2022 vs 2026)
 # ==============================================================================
-map1_path = os.path.join(figures_dir, "map_1_road_network_evolution_2022_2026.png")
-if not os.path.exists(map1_path):
-    print("\nGenerating Map 1: Chhattisgarh Road Network Evolution (2022 vs 2026)...")
-    t0 = time.time()
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 12), dpi=300, facecolor='#f8f9fa')
+print("\nGenerating Map 1: Chhattisgarh Road Network Evolution (2022 vs 2026)...")
+t0 = time.time()
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 12), dpi=300, facecolor='#f8f9fa')
 
 # Panel 1: 2022
 cg.plot(ax=ax1, color='#f0f2f5', edgecolor='#8c92ac', linewidth=0.8)
-# Plot minor roads
 minor_2022 = roads_2022[roads_2022['fclass'].isin(['residential', 'unclassified', 'track', 'service'])]
 major_2022 = roads_2022[~roads_2022['fclass'].isin(['residential', 'unclassified', 'track', 'service'])]
 minor_2022.plot(ax=ax1, color='#a0aec0', linewidth=0.35, alpha=0.7)
 major_2022.plot(ax=ax1, color='#1e3a8a', linewidth=0.9, alpha=0.9)
 
-ax1.set_title("2022 OpenStreetMap Road Network\nTotal: 58,947 km (101,620 Segments)", fontsize=13, fontweight='bold', pad=10)
+ax1.set_title("2022 Baseline OpenStreetMap Road Network\nTotal: 58,947 km (101,620 Segments)", fontsize=12.5, fontweight='bold', pad=14)
 ax1.set_axis_off()
 add_north_arrow(ax1)
 
@@ -70,7 +67,7 @@ new_osm_ids = set(roads_2026['osm_id']) - set(roads_2022['osm_id'])
 new_roads = roads_2026[roads_2026['osm_id'].isin(new_osm_ids)]
 new_roads.plot(ax=ax2, color='#dc2626', linewidth=0.7, alpha=0.85, label='New Road Additions (2022-2026)')
 
-ax2.set_title(f"2026 OpenStreetMap Road Network\nTotal: 83,501 km (142,825 Segments) [+24,554 km / +41.7%]", fontsize=13, fontweight='bold', pad=10)
+ax2.set_title("2026 Expanded OpenStreetMap Road Network\nTotal: 83,501 km (142,825 Segments) [+24,554 km / +41.7%]", fontsize=12.5, fontweight='bold', pad=14)
 ax2.set_axis_off()
 add_north_arrow(ax2)
 
@@ -89,8 +86,8 @@ legend_elements_2 = [
 ]
 ax2.legend(handles=legend_elements_2, loc='lower left', frameon=True, facecolor='white', framealpha=0.9, fontsize=9.5)
 
-fig.suptitle("CHHATTISGARH STATE: ROAD NETWORK INFRASTRUCTURE EXPANSION (2022 vs 2026)", fontsize=16, fontweight='bold', y=0.97)
-plt.tight_layout()
+fig.suptitle("CHHATTISGARH STATE: ROAD NETWORK INFRASTRUCTURE EXPANSION (2022 vs 2026)", fontsize=16, fontweight='bold', y=0.98)
+plt.tight_layout(rect=[0, 0.02, 1, 0.92])
 fig.savefig(os.path.join(figures_dir, "map_1_road_network_evolution_2022_2026.png"), dpi=300, facecolor=fig.get_facecolor())
 plt.close()
 print(f"Saved map_1_road_network_evolution_2022_2026.png in {time.time()-t0:.1f}s")
@@ -167,8 +164,8 @@ add_north_arrow(ax2)
 ax2.set_title("2026 + PMGSY Integrated Accessibility Status\n74.0% High Access (<500m) | Only 4.6% Isolated (>2km)", fontsize=13, fontweight='bold', pad=10)
 ax2.legend(loc='lower left', frameon=True, facecolor='white', framealpha=0.95, fontsize=9.5, title='Distance to Nearest Road', title_fontproperties={'weight': 'bold'})
 
-fig.suptitle("SPATIAL ACCESSIBILITY TRANSFORMATION OF 29,831 RURAL HABITATIONS IN CHHATTISGARH\nComparison of Baseline (2022) vs Fully Integrated Network (2026 OSM + PMGSY Schemes)", fontsize=16, fontweight='bold', y=0.97)
-plt.tight_layout()
+fig.suptitle("SPATIAL ACCESSIBILITY TRANSFORMATION OF 29,831 RURAL HABITATIONS IN CHHATTISGARH\nComparison of Baseline (2022) vs Fully Integrated Network (2026 OSM + PMGSY Schemes)", fontsize=16, fontweight='bold', y=0.98)
+plt.tight_layout(rect=[0, 0.02, 1, 0.92])
 fig.savefig(os.path.join(figures_dir, "map_3_habitation_accessibility.png"), dpi=300, facecolor=fig.get_facecolor())
 plt.close()
 print(f"Saved map_3_habitation_accessibility.png in {time.time()-t0:.1f}s")
