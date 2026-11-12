@@ -1,0 +1,115 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "chhattisgarh-rural-road-accessibility"
+version = "1.0.0"
+description = "Multi-temporal geospatial accessibility and network analysis of Chhattisgarh State (2022–2026)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Akshit Vaishnav", email = "akshitvaishnavonline@gmail.com" }
+]
+keywords = [
+    "geospatial",
+    "accessibility",
+    "network-analysis",
+    "pmgsy",
+    "chhattisgarh",
+    "gis",
+    "openstreetmap",
+    "rural-development"
+]
+dependencies = [
+    "geopandas>=0.14.0",
+    "shapely>=2.0.0",
+    "pyogrio>=0.7.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "folium>=0.14.0",
+    "typing-extensions>=4.8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.3.0",
+    "pyright>=1.1.350",
+    "pytest>=8.0.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.3.0",
+    "pyright>=1.1.350",
+]
+
+# ==============================================================================
+# Ruff Linter & Formatter Configuration (https://github.com/astral-sh/ruff)
+# ==============================================================================
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+indent-width = 4
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort import sorting
+    "B",      # flake8-bugbear
+    "UP",     # pyupgrade (modern python syntax)
+    "RUF",    # ruff-specific rules
+    "PTH",    # flake8-use-pathlib
+    "SIM",    # flake8-simplify
+    "TCH",    # flake8-type-checking
+]
+ignore = [
+    "E501",   # line length handled by ruff format
+    "B008",   # function call in argument defaults
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["typing_schema"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# ==============================================================================
+# Pyright Strict Mode Configuration (https://github.com/microsoft/pyright)
+# ==============================================================================
+[tool.pyright]
+include = ["."]
+exclude = [
+    "**/__pycache__",
+    ".venv",
+    "build",
+    "dist"
+]
+pythonVersion = "3.10"
+typeCheckingMode = "strict"
+
+# Strict rule enforcement
+reportMissingTypeStubs = false
+reportUnknownMemberType = false
+reportUnknownArgumentType = false
+reportUnknownVariableType = false
+reportMissingParameterType = true
+reportMissingTypeArgument = true
+reportUntypedFunctionDecorator = true
+reportUnnecessaryTypeIgnoreComment = true
+reportGeneralTypeIssues = true
+reportOptionalMemberAccess = true
+reportOptionalSubscript = true
+reportPrivateImportUsage = false
+reportConstantRedefinition = true
+reportDuplicateBases = true
+reportInconsistentConstructor = true
+reportInvalidStringEscapeSequence = false

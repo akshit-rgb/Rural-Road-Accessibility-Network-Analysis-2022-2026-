@@ -2,6 +2,8 @@
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![uv](https://img.shields.io/badge/Managed%20with-uv-purple.svg)](https://github.com/astral-sh/uv)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Pyright Strict](https://img.shields.io/badge/Pyright-Strict%20Mode-blue.svg)](https://github.com/microsoft/pyright)
 [![CodeRabbit](https://img.shields.io/badge/Reviewed%20by-CodeRabbit-ff69b4.svg)](https://coderabbit.ai)
 [![GeoPandas](https://img.shields.io/badge/GeoPandas-Enabled-green.svg)](https://geopandas.org/)
 [![Leaflet](https://img.shields.io/badge/WebGIS-Leaflet-199900.svg)](https://leafletjs.com/)
@@ -272,9 +274,43 @@ If your GitHub organization enforces IP allowlists, ensure CodeRabbit egress IP 
 
 ---
 
+## 🛠️ Modern Python Tooling & Quality Standards
+
+### 1. Centralized Project Metadata (`pyproject.toml`)
+This repository standardizes project specification under PEP 621 using `pyproject.toml`, defining all runtime dependencies, dev toolchains, and strict linter configurations in a single declarative file.
+
+### 2. Ruff Linter & Formatter (`astral-sh/ruff`)
+[Ruff](https://github.com/astral-sh/ruff) delivers near-instantaneous linting and auto-formatting:
+- **Rules Enforced**: `E`/`W` (pycodestyle), `F` (Pyflakes), `I` (isort), `B` (flake8-bugbear), `UP` (pyupgrade), `RUF` (Ruff rules), `PTH` (pathlib), `SIM` (simplify).
+- **Execution**:
+  ```bash
+  uv run ruff check . --fix
+  uv run ruff format .
+  ```
+
+### 3. Pyright Static Type Checker in Strict Mode (`microsoft/pyright`)
+[Pyright](https://github.com/microsoft/pyright) is configured in **`strict`** mode under `[tool.pyright]` in `pyproject.toml`:
+- Enforces strict parameter, return, and variable type inference across all analysis modules.
+- **Execution**:
+  ```bash
+  uv run pyright .
+  ```
+
+### 4. Modern Python Typing Architecture (`typing_schema.py`)
+This repository defines structural type safety utilizing modern Python typing constructs:
+- **`Protocol` (Structural Subtyping)**: `SpatialIndexTree` and `NetworkMetricCalculator` runtime-checkable protocols decouple geometry implementations from distance solvers.
+- **`TypedDict` (Schema Validation)**: `HabitationFeatureRecord`, `DistrictSummaryRecord`, and `SchemePortfolioRecord` type-check tabular datasets and GeoJSON dictionaries.
+- **`Literal` (Domain Safety)**: Constrains categories such as `AccessibilityTier` (`"<500m (High)"`, `">2km (Isolated)"`), `PMGSYScheme` (`"PMGSY-I"`, `"PM-JANMAN"`), and `RoadFunctionalClass`.
+
+---
+
 ## 📁 Repository Directory Structure
 
 ```
+├── pyproject.toml                            # Centralized project, uv, ruff & pyright configuration
+├── typing_schema.py                          # Protocol, TypedDict & Literal definitions (Strict Pyright)
+├── .coderabbit.yaml                          # CodeRabbit automated AI review rules
+├── requirements.txt                          # Locked runtime dependencies
 ├── figures/                                   # 300 DPI high-resolution figures & maps
 │   ├── map_1_road_network_evolution_2022_2026.png
 │   ├── map_2_pmgsy_schemes_chhattisgarh.png
