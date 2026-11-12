@@ -1,11 +1,12 @@
-import geopandas as gpd
-import pandas as pd
-import numpy as np
 import os
-import zipfile
+from pathlib import Path
 import time
+import zipfile
+import geopandas as gpd
+import numpy as np
+import pandas as pd
 
-base_dir = r"C:\Users\akshi\Downloads\geospatial_project\chhattisgaher_accisability_analysis"
+base_dir = Path(__file__).resolve().parent
 TARGET_CRS = "EPSG:32644"  # UTM Zone 44N, in meters
 
 DISTRICT_NAME_MAP = {

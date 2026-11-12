@@ -1,12 +1,13 @@
+from pathlib import Path
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
 
-base_dir = r"C:\Users\akshi\Downloads\geospatial_project\chhattisgaher_accisability_analysis"
-figures_dir = os.path.join(base_dir, "figures")
-os.makedirs(figures_dir, exist_ok=True)
+base_dir = Path(__file__).resolve().parent
+figures_dir = base_dir / "figures"
+figures_dir.mkdir(parents=True, exist_ok=True)
 
 # Set global style
 plt.style.use('seaborn-v0_8-whitegrid' if 'seaborn-v0_8-whitegrid' in plt.style.available else 'default')

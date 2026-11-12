@@ -1,9 +1,10 @@
-import geopandas as gpd
-import pandas as pd
 import json
 import os
+from pathlib import Path
+import geopandas as gpd
+import pandas as pd
 
-base_dir = r"C:\Users\akshi\Downloads\geospatial_project\chhattisgaher_accisability_analysis"
+base_dir = Path(__file__).resolve().parent
 
 print("1. Preparing District GeoJSON with Master Analytics...")
 cg = gpd.read_file(os.path.join(base_dir, "cg_districts_clean.gpkg"), layer="districts").to_crs(epsg=4326)

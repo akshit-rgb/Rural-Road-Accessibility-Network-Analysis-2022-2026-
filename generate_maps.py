@@ -21,10 +21,18 @@ import numpy as np
 import pandas as pd
 from matplotlib.lines import Line2D
 
-BASE_DIR = Path(r"C:\Users\akshi\Downloads\geospatial_project\chhattisgaher_accisability_analysis")
+BASE_DIR = Path(__file__).resolve().parent
 FIGURES_DIR = BASE_DIR / "figures"
-ARTIFACT_DIR = Path(r"C:\Users\akshi\.gemini\antigravity-cli\brain\56b8f6fc-2fb5-479b-95d9-5c2230419e3b")
+ARTIFACT_DIR = Path(os.environ.get("ARTIFACT_DIR", r"C:\Users\akshi\.gemini\antigravity-cli\brain\56b8f6fc-2fb5-479b-95d9-5c2230419e3b"))
 FIGURES_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def save_and_sync(fig: plt.Figure, out_path: Path, **kwargs: object) -> None:
+    """Save high-resolution figure and optionally sync to artifact directory if present."""
+    fig.savefig(out_path, dpi=300, facecolor=fig.get_facecolor(), **kwargs)
+    plt.close(fig)
+    if ARTIFACT_DIR.exists():
+        shutil.copy(out_path, ARTIFACT_DIR / out_path.name)
 
 TARGET_CRS = "EPSG:32644"
 
@@ -126,9 +134,7 @@ fig.suptitle("CHHATTISGARH STATE: ROAD NETWORK INFRASTRUCTURE EXPANSION (2022 vs
 plt.tight_layout(rect=[0, 0.02, 1, 0.92])
 
 out_map1 = FIGURES_DIR / "map_1_road_network_evolution_2022_2026.png"
-fig.savefig(out_map1, dpi=300, facecolor=fig.get_facecolor())
-plt.close()
-shutil.copy(out_map1, ARTIFACT_DIR / "map_1_road_network_evolution_2022_2026.png")
+save_and_sync(fig, out_map1)
 print(f"[DONE] Map 1 in {time.time()-t0:.1f}s")
 
 
@@ -164,9 +170,7 @@ ax.set_title("PMGSY & PM-JANMAN RURAL ROAD SCHEME NETWORK IN CHHATTISGARH\nTotal
 plt.tight_layout()
 
 out_map2 = FIGURES_DIR / "map_2_pmgsy_schemes_chhattisgarh.png"
-fig.savefig(out_map2, dpi=300, facecolor=fig.get_facecolor())
-plt.close()
-shutil.copy(out_map2, ARTIFACT_DIR / "map_2_pmgsy_schemes_chhattisgarh.png")
+save_and_sync(fig, out_map2)
 print(f"[DONE] Map 2 in {time.time()-t0:.1f}s")
 
 
@@ -210,9 +214,7 @@ fig.suptitle("SPATIAL ACCESSIBILITY TRANSFORMATION OF 29,831 RURAL HABITATIONS I
 plt.tight_layout(rect=[0, 0.02, 1, 0.92])
 
 out_map3 = FIGURES_DIR / "map_3_habitation_accessibility.png"
-fig.savefig(out_map3, dpi=300, facecolor=fig.get_facecolor())
-plt.close()
-shutil.copy(out_map3, ARTIFACT_DIR / "map_3_habitation_accessibility.png")
+save_and_sync(fig, out_map3)
 print(f"[DONE] Map 3 in {time.time()-t0:.1f}s")
 
 
@@ -256,9 +258,7 @@ fig.suptitle("CHHATTISGARH DISTRICT ROAD DENSITY COMPARATIVE CHOROPLETH (2022 vs
 plt.tight_layout(rect=[0, 0.02, 0.91, 0.92])
 
 out_map4 = FIGURES_DIR / "map_4_district_road_density_choropleth.png"
-fig.savefig(out_map4, dpi=300, facecolor=fig.get_facecolor())
-plt.close()
-shutil.copy(out_map4, ARTIFACT_DIR / "map_4_district_road_density_choropleth.png")
+save_and_sync(fig, out_map4)
 print(f"[DONE] Map 4 in {time.time()-t0:.1f}s")
 
 
@@ -291,9 +291,7 @@ ax.set_title("CHHATTISGARH AGRICULTURAL FARMLAND & TRANSPORT CORRIDORS\nTotal Fa
 plt.tight_layout()
 
 out_map5 = FIGURES_DIR / "map_5_agricultural_road_accessibility.png"
-fig.savefig(out_map5, dpi=300, facecolor=fig.get_facecolor())
-plt.close()
-shutil.copy(out_map5, ARTIFACT_DIR / "map_5_agricultural_road_accessibility.png")
+save_and_sync(fig, out_map5)
 print(f"[DONE] Map 5 in {time.time()-t0:.1f}s")
 
 
@@ -392,9 +390,7 @@ fig.suptitle("CHHATTISGARH STATE GEOSPATIAL INFRASTRUCTURE & ACCESSIBILITY ANALY
              fontsize=16, fontweight="bold", y=0.978, color="#0f172a")
 
 out_map6 = FIGURES_DIR / "map_6_chhattisgarh_accessibility_master_dashboard.png"
-fig.savefig(out_map6, dpi=300, facecolor=fig.get_facecolor(), bbox_inches="tight")
-plt.close()
-shutil.copy(out_map6, ARTIFACT_DIR / "map_6_chhattisgarh_accessibility_master_dashboard.png")
+save_and_sync(fig, out_map6, bbox_inches="tight")
 print(f"[DONE] Map 6 in {time.time()-t0:.1f}s")
 
 print("\n[COMPLETE] All 6 maps re-rendered with zero bottom coverage and zero text overlap!")
