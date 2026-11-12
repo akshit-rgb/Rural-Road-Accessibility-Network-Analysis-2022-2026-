@@ -1,0 +1,19 @@
+# ==========================================
+# Large Binary & Geospatial Datasets (>100MB)
+# Note: agriculture_field shapefile is 11.8 GB and exceeds GitHub's 100MB file limit.
+# Summarized district metrics are preserved in agri_district_summary.csv
+# ==========================================
+agriculture_field.shp
+agriculture_field.dbf
+agriculture_field.shx
+agriculture_field.qmd
+agriculture_field.prj
+agriculture_field.cpg
+
+# Temporary & Python Cache Files
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+.DS_Store
+Thumbs.db
